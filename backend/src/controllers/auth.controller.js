@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from 'bcryptjs'
 import { generateToken } from "../lib/utils.js";
+import cloudinary from '../lib/cloudinary.js'
 
 
 export const signup = async (req , res)=>{
@@ -61,4 +62,19 @@ export const logout = (req , res)=>{
 
 export const updateProfile = async(req , res)=>{
 
+    try {
+        const {profilePicture} = req.body;
+        const userId = req.user._id;
+        if(!profilePicture) res.status(400).json({message: "profile Picture is not selected"});
+
+        const updateResponse = await cloudinary.uploader.upload(profilePicture)
+        const updatedUser = await User.findByIdAndUpdate(userId,{profilePicture:updateResponse.secure_url},{new: true})
+
+        res.status(200).json({message: "Profile picture updated successfully", user: updatedUser})
+
+
+    } catch (error) {
+        console.log(`Error in updateProfile controller ${error.message}`);
+        res.status(500).json({message: "Internal server error in auth controller" + error.message});
+    }
 }
