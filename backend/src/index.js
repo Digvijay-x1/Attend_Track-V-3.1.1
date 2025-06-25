@@ -4,6 +4,8 @@ import authRoute from "./routes/auth.route.js";
 import courseRoute from "./routes/course.route.js";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
+import AttendancesRoute from "./routes/attendance.route.js";
+import dashboardRoute from "./routes/dashboard.route.js";
 
 dotenv.config();
 
@@ -14,6 +16,8 @@ app.use(cookieParser());
 
 app.use('/api/auth' , authRoute)
 app.use('/api/courses' , courseRoute)
+app.use('/api/attendances' , AttendancesRoute)
+app.use('/api/dashboard' , dashboardRoute)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);

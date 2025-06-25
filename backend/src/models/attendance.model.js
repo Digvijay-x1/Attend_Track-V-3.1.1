@@ -17,10 +17,13 @@ const attendanceSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['present', 'absent'],
+        enum: ['present', 'absent', 'cancelled'],
     },
-
-})
+    attendanceValue: {
+        type: Number,
+        default: 1,
+    },
+}, {timestamps: true})
 
 const Attendance = mongoose.model("Attendance", attendanceSchema);
 

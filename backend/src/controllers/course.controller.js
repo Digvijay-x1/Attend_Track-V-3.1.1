@@ -1,8 +1,11 @@
 import Course from "../models/course.model.js";
+
+
+
 export const createCourse = async(req , res)=>{
-    const {title , profName , code , schedule} = req.body;
+    const {title , profName , code , schedule, type} = req.body;
     try {
-        const newCourse = new Course({title , profName , code , schedule , user: req.user._id})
+        const newCourse = new Course({title , profName , code , schedule , user: req.user._id , type})
         await newCourse.save();
         res.status(201).json({message: "Course created successfully", course: newCourse})
     } catch (error) {
@@ -10,7 +13,6 @@ export const createCourse = async(req , res)=>{
         res.status(500).json({message: "Internal server error in course controller" + error.message});
     }
 }
-
 
 export const getCourses = async(req , res)=>{
     try {
@@ -24,9 +26,9 @@ export const getCourses = async(req , res)=>{
 
 export const updateCourse = async(req , res)=>{
     const {id} = req.params;
-    const {title , profName , code , schedule} = req.body;
+    const {title , profName , code , schedule, type} = req.body;
     try {
-        const updatedCourse = await Course.findByIdAndUpdate(id , {title , profName , code , schedule} , {new: true});
+        const updatedCourse = await Course.findByIdAndUpdate(id , {title , profName , code , schedule, type} , {new: true});
         res.status(200).json({message: "Course updated successfully", course: updatedCourse})
     } catch (error) {
         console.log(`Error in updateCourse controller ${error.message}`);

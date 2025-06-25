@@ -32,16 +32,7 @@ const userSchema = new mongoose.Schema({
 )
 
 userSchema.methods.getAttendanceStats = async function() {
-    try {
-        const attendances = await Attendance.find({ user: this._id }).populate('course');
-        return {
-          totalClasses: attendances.length,
-          classesAttended: attendances.filter(att => att.status === 'present').length
-        };
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to get attendance stats");
-    }
+   
 
   };
   
