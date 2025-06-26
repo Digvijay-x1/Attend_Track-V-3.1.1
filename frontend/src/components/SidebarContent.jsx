@@ -15,6 +15,7 @@ import {
 const SidebarContent = ({ onItemClick }) => {
   const { authUser, logout } = useAuthStore();
   const location = useLocation();
+  const {name , email , profilePicture } = authUser.user;
 
   const navItems = [
     { path: '/', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
@@ -69,14 +70,14 @@ const SidebarContent = ({ onItemClick }) => {
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-full bg-base-200 overflow-hidden">
               <img 
-                src={authUser.profilePicture || "https://via.placeholder.com/40"} 
-                alt={authUser.name || "User"} 
+                src={profilePicture || "/avatar.png"} 
+                alt={name || "User"} 
                 className="w-full h-full object-cover"
               />
             </div>
             <div>
-              <p className="font-semibold text-base-content">{authUser.name || "John Doe"}</p>
-              <p className="text-sm text-base-content/70">{authUser.email || "john.doe@college.edu"}</p>
+              <p className="font-semibold text-base-content">{name || "John Doe"}</p>
+              <p className="text-sm text-base-content/70">{email || "john.doe@college.edu"}</p>
             </div>
           </div>
           <button 
