@@ -5,8 +5,8 @@ import {
   ArcElement,
   Tooltip,
   Legend,
-  plugins
 } from 'chart.js';
+import { Link } from 'react-router-dom';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -89,13 +89,13 @@ const SubjectAttendanceChart = ({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white p-6 rounded-lg">
+    <div className="w-full text-base-content/70 max-w-md mx-auto bg-base-100 p-6 rounded-lg">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-        <button className="text-blue-500 text-sm font-medium hover:text-blue-600">
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <Link to="/subjects" className="text-blue-500 text-sm font-medium hover:text-blue-600">
           View All
-        </button>
+        </Link>
       </div>
 
       {/* Chart Container */}
@@ -116,9 +116,9 @@ const SubjectAttendanceChart = ({
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: data.datasets[0].backgroundColor[index] }}
               ></div>
-              <span className="text-gray-700 font-medium">{subject.name}</span>
+              <span className="text-base-content font-medium">{subject.name}</span>
             </div>
-            <span className="text-gray-900 font-semibold">{subject.percentage}%</span>
+            <span className="text-base-content font-semibold">{subject.percentage}%</span>
           </div>
         ))}
       </div>
