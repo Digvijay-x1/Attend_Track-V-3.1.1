@@ -15,7 +15,7 @@ import {
 const SidebarContent = ({ onItemClick }) => {
   const { authUser, logout } = useAuthStore();
   const location = useLocation();
-  const {name , email , profilePicture } = authUser.user;
+  const { name, email, profilePicture } = authUser?.user || {};
 
   const navItems = [
     { path: '/', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },

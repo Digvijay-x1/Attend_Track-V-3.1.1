@@ -36,11 +36,14 @@ export const useAuthStore = create((set) => ({
     logout: async()=>{
         try {
             await axiosInstance.post("/auth/logout");
-            toast.success("logout successfully");
-            set({authUser: null})
+            set({authUser: null});
+            toast.success("Logged out successfully");
+            // Redirect will happen automatically due to the protected routes in App.jsx
         } catch (error) {
-            toast.error("Failed to logut");
-            console.log("error in use authstore in logout: " ,error )
+            // Even if the API call fails, we should still log the user out locally
+            set({authUser: null});
+            console.log("error in logout: ", error);
+            toast.error("Error during logout, but you've been logged out locally");
         }
     },
     login: async(formData)=>{

@@ -44,3 +44,43 @@ export const lowAttendanceCourses = async(userId)=>{
         throw new Error("Failed to get low attendance courses" + error.message);
     }
 }
+
+export const getUserCoursesWithAttendancePercentage = async(userId) => {
+    try {
+        // Get all courses for the user
+        const courses = await Course.find({user: userId});
+        const coursesWithAttendance = [];
+        
+        // For each course, calculate attendance percentage
+        for(const course of courses){
+            const attendanceStats = await getAttendanceStatsByCourse(userId, course._id);
+            
+            // Calculate attendance percentage
+            const attendancePercentage = attendanceStats.totalclasses > 0 
+                ? (attendanceStats.totalclassesAttended / attendanceStats.totalclasses) * 100 
+                : 0; // If no classes yet, consider it 0%
+            
+            // Add course with attendance data
+            coursesWithAttendance.push({
+                _id: course._id,
+                title: course.title,
+                code: course.code,
+                profName: course.profName,
+                type: course.type,
+                schedule: course.schedule,
+                totalClasses: attendanceStats.totalclasses,
+                attendedClasses: attendanceStats.totalclassesAttended,
+                attendancePercentage: Math.round(attendancePercentage * 100) / 100 // Round to 2 decimal places
+            });
+        }
+        
+        // Sort by attendance percentage (highest first)
+        coursesWithAttendance.sort((a, b) => b.attendancePercentage - a.attendancePercentage);
+        
+        return coursesWithAttendance;
+    } catch (error) {
+        console.log(`Error in getUserCoursesWithAttendance service ${error.message}`);
+        throw new Error("Failed to get courses with attendance data: " + error.message);
+    }
+}
+

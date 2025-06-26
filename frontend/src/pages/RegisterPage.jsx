@@ -106,9 +106,9 @@ const RegisterPage = () => {
       </div>
 
       {/* right side */}
-      <div className='flex-1 flex justify-center items-center '>
+      <div className='hidden sm:flex flex-1 justify-center items-center'>
         <Driff />
-      </div>
+       </div>
     </div>
     )
 }
