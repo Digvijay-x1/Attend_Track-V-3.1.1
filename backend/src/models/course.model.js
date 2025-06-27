@@ -6,12 +6,6 @@ const courseSchema =  new mongoose.Schema({
     profName:     { type: String, required: true },
     code:         { type: String, required: true },
     user:     { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    type: {
-      type: String,
-      enum: ['lecture', 'lab', 'tutorial'],
-      required: true,
-      default: 'lecture',
-    },
     schedule: [{                                       
         dayOfWeek:  { type: Number, min: 0, max: 6 },     
         startTime:  { type: String },                   
