@@ -66,7 +66,7 @@ const SidebarContent = ({ onItemClick }) => {
 
       {/* User profile and logout */}
       {authUser && (
-        <div className="p-4 border-t border-base-300 bg-base-200">
+        <div className="p-4 border-t border-base-300 bg-base-300/30">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-full bg-base-200 overflow-hidden">
               <img 

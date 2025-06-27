@@ -84,3 +84,28 @@ export const getUserCoursesWithAttendancePercentage = async(userId) => {
     }
 }
 
+export const totalHoursOfClassesPerWeek = async (userId) => {
+    try {
+      
+      const courses = await Course.find({ user: userId });
+      let totalMinutes = 0;
+  
+      for (const course of courses) {
+        for (const schedule of course.schedule) {
+          const [startHour, startMinute] = schedule.startTime.split(':').map(Number);
+          const [endHour, endMinute] = schedule.endTime.split(':').map(Number);
+  
+          const durationInMinutes = (endHour * 60 + endMinute) - (startHour * 60 + startMinute);
+          totalMinutes += durationInMinutes;
+        }
+      }
+  
+      const totalHours = totalMinutes / 60;
+      return totalHours.toFixed(1);
+  
+    } catch (error) {
+      console.error(`Error in totalHoursOfClassesPerWeek service: ${error.message}`);
+      throw new Error("Failed to get total hours of classes per week: " + error.message);
+    }
+  };
+
