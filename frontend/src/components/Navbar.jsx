@@ -44,14 +44,14 @@ const Navbar = () => {
         </div>
         <div className="drawer-side z-20">
           <label htmlFor="navbar-drawer" aria-label="close sidebar" className="drawer-overlay" onClick={closeDrawer}></label>
-          <div className="w-64 bg-base-100 h-[100dvh]">
+          <div className="w-64 bg-base-100 h-[100dvh] overflow-hidden">
             <SidebarContent onItemClick={closeDrawer} />
           </div>
         </div>
       </div>
 
       {/* Desktop sidebar - hidden on small screens */}
-      <div className="hidden lg:block fixed left-0 top-0 h-screen w-64 border-r border-base-300 shadow-sm">
+      <div className="hidden lg:block fixed left-0 top-0 h-screen w-64 border-r border-base-300 shadow-sm overflow-hidden">
         <SidebarContent />
       </div>
     </>
