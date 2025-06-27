@@ -3,7 +3,8 @@ import { Plus, Book, Clock, BarChart3 } from 'lucide-react'
 import { useSubjectStore } from '../store/useSubject.store'
 import SubjectCard from '../components/SubjectCard'
 import SubjectModel from '../components/popupModel/SubjectModel'
-import SkeletonCard from '../components/SkeletonCard'
+import SkeletonCard from '../components/skeleton/SkeletonCard'
+import toast from 'react-hot-toast'
 
 const SubjectPage = () => {
   const [editingSubject, setEditingSubject] = useState(null);
@@ -16,7 +17,8 @@ const SubjectPage = () => {
     createSubject,
     editSubject,
     deleteSubject,
-    isLoading 
+    isLoading,
+    isSubjectsLoading,
   } = useSubjectStore();
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const SubjectPage = () => {
   const { totalSubjects, weeklyClassesInHours, avgAttendance } = data || {};
 
   const handleSubjectSubmit = async (formData) => {
-    if (editingSubject) {
+    try{if (editingSubject) {
       await editSubject(editingSubject._id, formData);
     } else {
       await createSubject(formData);
@@ -35,17 +37,29 @@ const SubjectPage = () => {
     await Promise.all([fetchSubjectsData(), fetchSubjects()]);
     document.getElementById('subject_modal').close();
     setEditingSubject(null);
+    toast.success('Subject submitted successfully');
+    }catch(error){
+      toast.error(error.response.data.message);
+    }
   };
 
   const handleEdit = (subject) => {
-    setEditingSubject(subject);
-    document.getElementById('subject_modal').showModal();
+    try{
+      setEditingSubject(subject);
+      document.getElementById('subject_modal').showModal();
+      toast.success('Editing subject');
+    }catch(error){
+      toast.error(error.response.data.message);
+    }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this subject?')) {
+    try{if (window.confirm('Are you sure you want to delete this subject?')) {
       await deleteSubject(id);
       await Promise.all([fetchSubjectsData(), fetchSubjects()]);
+      toast.success('Subject deleted successfully');
+    }}catch(error){
+      toast.error(error.response.data.message);
     }
   };
 
@@ -156,7 +170,7 @@ const SubjectPage = () => {
 
       {/* Subjects Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {isLoading ? (
+        {isSubjectsLoading ? (
           // Show skeleton cards while loading
           skeletonCards.map((_, index) => (
             <SkeletonCard key={index} />

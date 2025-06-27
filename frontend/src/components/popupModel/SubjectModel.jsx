@@ -8,7 +8,6 @@ const SubjectModel = ({ onSubmit, initialData }) => {
     title: '',
     profName: '',
     code: '',
-    type: 'lecture',
     schedule: []
   });
 
@@ -18,7 +17,6 @@ const SubjectModel = ({ onSubmit, initialData }) => {
         title: initialData.title || '',
         profName: initialData.profName || '',
         code: initialData.code || '',
-        type: initialData.type || 'lecture',
         schedule: initialData.schedule || []
       });
     }
@@ -101,22 +99,6 @@ const SubjectModel = ({ onSubmit, initialData }) => {
           required 
           className="input input-bordered w-full" 
         />
-      </div>
-
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Course Type</span>
-        </label>
-        <select 
-          name="type" 
-          value={formData.type} 
-          onChange={handleChange} 
-          className="select select-bordered w-full"
-        >
-          <option value="lecture">Lecture</option>
-          <option value="lab">Lab</option>
-          <option value="tutorial">Tutorial</option>
-        </select>
       </div>
 
       <div className="form-control">

@@ -5,6 +5,7 @@ import { axiosInstance } from "../lib/axios";
 
 export const useSubjectStore = create((set)=>({
     subjects: [],
+    isSubjectsLoading: false,
     isLoading: false,
     error: null,
     data: null,
@@ -21,7 +22,7 @@ export const useSubjectStore = create((set)=>({
         }
     },
     fetchSubjects: async()=>{
-        set({isLoading: true});
+        set({isSubjectsLoading: true});
         try {
             const res = await axiosInstance.get("/dashboard/get-dashboard-data");
             set({subjects: res.data.coursesWithAttendancePercentage});
@@ -29,7 +30,7 @@ export const useSubjectStore = create((set)=>({
             console.log(`Error in fetchSubjects: ${error.message}`);
             set({error: error.message});
         } finally {
-            set({isLoading: false});
+            set({isSubjectsLoading: false});
         }
     },
     deleteSubject: async(id)=>{

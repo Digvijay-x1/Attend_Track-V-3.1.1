@@ -94,10 +94,10 @@ const Dashboard = () => {
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Weekly Attendance Chart */}
-        <div className="bg-base-100 rounded-xl p-6 shadow-sm">
-          <h3 className="text-sm text-base-content/70 font-medium mb-4">Weekly Attendance</h3>
-          <WeeklyAttendanceChart stats={stats} />
-        </div>
+        <div className="hidden sm:block bg-base-100 rounded-xl p-6 shadow-sm">
+  <h3 className="text-sm text-base-content/70 font-medium mb-4">Weekly Attendance</h3>
+  <WeeklyAttendanceChart stats={stats} />
+</div>
 
         {/* Subject Attendance Chart */}
         <div className="bg-base-100 rounded-xl p-6 shadow-sm">
