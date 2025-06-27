@@ -1,8 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SidebarContent from './SidebarContent';
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // Prevent body scrolling when drawer is open
+  useEffect(() => {
+    if (drawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [drawerOpen]);
 
   const closeDrawer = () => {
     setDrawerOpen(false);
@@ -11,7 +24,7 @@ const Navbar = () => {
   return (
     <>
       {/* Mobile drawer - visible on small screens */}
-      <div className=" drawer lg:hidden">
+      <div className="drawer lg:hidden">
         <input 
           id="navbar-drawer" 
           type="checkbox" 
@@ -31,7 +44,7 @@ const Navbar = () => {
         </div>
         <div className="drawer-side z-20">
           <label htmlFor="navbar-drawer" aria-label="close sidebar" className="drawer-overlay" onClick={closeDrawer}></label>
-          <div className="w-64 min-h-full">
+          <div className="w-64 bg-base-100 h-[100dvh]">
             <SidebarContent onItemClick={closeDrawer} />
           </div>
         </div>

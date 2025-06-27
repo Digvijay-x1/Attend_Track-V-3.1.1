@@ -28,10 +28,10 @@ const SidebarContent = ({ onItemClick }) => {
   };
 
   return (
-    <div className="bg-base-100 h-full flex flex-col justify-between">
+    <div className="bg-base-100 h-full flex flex-col overflow-y-auto relative">
       {/* Logo and sidebar top section */}
       <div className="p-4">
-        <div className="flex items-center gap-3 mb-12">
+        <div className="flex items-center gap-3 mb-8">
           <div className="size-11 bg-primary text-primary-content p-2 rounded-lg">
             <span className="font-bold text-lg">A.T</span>
           </div>
@@ -39,7 +39,7 @@ const SidebarContent = ({ onItemClick }) => {
         </div>
 
         {/* Navigation items */}
-        <ul className="space-y-1">
+        <ul className="space-y-1 mb-24">
           {navItems.map((item) => (
             <li key={item.path} onClick={onItemClick}>
               <Link
@@ -60,9 +60,9 @@ const SidebarContent = ({ onItemClick }) => {
         </ul>
       </div>
 
-      {/* User profile and logout */}
+      {/* User profile and logout - fixed at bottom */}
       {authUser && (
-        <div className="p-4 border-t border-base-300 bg-base-300/30">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-base-300 bg-base-300/30">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-full bg-base-200 overflow-hidden">
               <img 
@@ -81,7 +81,7 @@ const SidebarContent = ({ onItemClick }) => {
               logout();
               if (onItemClick) onItemClick();
             }}
-            className="w-full flex items-center justify-center gap-2 p-2 border border-base-300 rounded-md hover:bg-primary cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 p-2 border border-base-300 rounded-md hover:bg-primary hover:text-primary-content transition-colors cursor-pointer"
           >
             <LogOut size={16} />
             <span>Logout</span>
