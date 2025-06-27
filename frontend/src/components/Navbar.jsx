@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <>
       {/* Mobile drawer - visible on small screens */}
-      <div className="drawer lg:hidden">
+      <div className=" drawer lg:hidden">
         <input 
           id="navbar-drawer" 
           type="checkbox" 

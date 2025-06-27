@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 
 const RecentAtt = ({recentAttendance = {}}) => {
-  const attendanceList = recentAttendance?.recentAttendance || [];
+  const attendanceList = useMemo(() => recentAttendance?.recentAttendance || [], [recentAttendance]);
   const [newAttendances, setNewAttendances] = useState({});
   
   // Track new attendance records with animation effect

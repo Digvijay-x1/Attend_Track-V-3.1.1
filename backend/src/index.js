@@ -8,6 +8,7 @@ import AttendancesRoute from "./routes/attendance.route.js";
 import dashboardRoute from "./routes/dashboard.route.js";
 import subjectRoute from "./routes/subject.route.js";
 import inputRoute from "./routes/input.route.js";
+import calculatorRoute from "./routes/calculator.route.js";
 import cors from "cors"
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use('/api/attendances' , AttendancesRoute)
 app.use('/api/dashboard' , dashboardRoute)
 app.use('/api/subjects' , subjectRoute)
 app.use("/api/input" , inputRoute)
+app.use("/api/calculator" , calculatorRoute)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);

@@ -5,7 +5,6 @@ import DashboardPage from './pages/DashboardPage'
 import ProfilePage from './pages/ProfilePage'
 import { useAuthStore } from './store/useAuthStore'
 import CalculatorPage from './pages/CalculatorPage'
-import AnalyticsPage from './pages/AnalyticsPage'
 import AttendancePage from './pages/AttendancePage'
 import SubjectPage from './pages/SubjectPage'
 import LoginPage from './pages/LoginPage'
@@ -37,9 +36,8 @@ const App = () => {
       <div className={!isAuthPage ? "lg:pl-64 pt-4 px-4 min-h-screen" : ""}>
         <Routes>
           <Route path='/' element={authUser ? <DashboardPage /> : <Navigate to="/login" />} />
-          <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
+          <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to="/login" />} /> 
           <Route path='/calculator' element={authUser ? <CalculatorPage /> : <Navigate to="/login" />} />
-          <Route path='/analytics' element={authUser ? <AnalyticsPage /> : <Navigate to="/login" />} />
           <Route path='/attendance' element={authUser ? <AttendancePage /> : <Navigate to="/login" />} />
           <Route path='/subjects' element={authUser ? <SubjectPage /> : <Navigate to="/login" />} />
           <Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to="/" />} />

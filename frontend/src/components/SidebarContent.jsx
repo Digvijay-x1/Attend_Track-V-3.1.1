@@ -4,9 +4,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { 
   LayoutDashboard, 
   BookOpen, 
-  BarChart3,
   Calculator,
-  BellRing, 
   UserCog,
   ClipboardEdit,
   LogOut
@@ -21,8 +19,6 @@ const SidebarContent = ({ onItemClick }) => {
     { path: '/', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
     { path: '/attendance', icon: <ClipboardEdit size={20} />, label: 'Attendance Input' },
     { path: '/subjects', icon: <BookOpen size={20} />, label: 'Subject Management' },
-    { path: '/analytics', icon: <BarChart3 size={20} />, label: 'Analytics' },
-    { path: '/alerts', icon: <BellRing size={20} />, label: 'Alerts' },
     { path: '/calculator', icon: <Calculator size={20} />, label: 'Calculator' },
     { path: '/profile', icon: <UserCog size={20} />, label: 'Profile Settings' },
   ];
