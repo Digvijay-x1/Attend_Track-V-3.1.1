@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { useInputStore } from '../../store/useInput.store';
-import {  CheckCircle2, XCircle, Ban , Album } from 'lucide-react';
+import { CheckCircle2, XCircle, Ban, Album } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 const TodaySchedule = ({ todaySchedule }) => {
   const { markAttendance, attendanceStatus } = useInputStore();
   const [attendanceInputs, setAttendanceInputs] = useState({});
-
-
 
   const handleChange = (id, value) => {
     setAttendanceInputs(prev => ({ ...prev, [id]: value }));
@@ -48,9 +46,17 @@ const TodaySchedule = ({ todaySchedule }) => {
     }
   };
 
+  if (!todaySchedule || todaySchedule.length === 0) {
+    return (
+      <div className="text-center py-8 text-base-content/70">
+        No classes scheduled for today
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
-      {todaySchedule?.map((classItem) => (
+      {todaySchedule.map((classItem) => (
         <div 
           key={classItem._id} 
           className={`card bg-base-100 border border-base-200 transition-all duration-200 hover:shadow-md ${
@@ -118,12 +124,6 @@ const TodaySchedule = ({ todaySchedule }) => {
           </div>
         </div>
       ))}
-
-      {(!todaySchedule || todaySchedule.length === 0) && (
-        <div className="text-center py-8 text-base-content/70">
-          No classes scheduled for today
-        </div>
-      )}
     </div>
   );
 };

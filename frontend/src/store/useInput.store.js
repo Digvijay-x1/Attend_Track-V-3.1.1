@@ -58,12 +58,15 @@ export const useInputStore = create((set, get) => ({
   },
 
   // mark attendance
-  markAttendance: async (classId, status , attendanceValue) => {
+  markAttendance: async (classId, status, attendanceValue) => {
     set({ isLoading: true, error: null });
     try {
-        await axiosInstance.post(`/attendances/mark-attendance/${classId}`, { status , attendanceValue });
+        await axiosInstance.post(`/attendances/mark-attendance/${classId}`, { status, attendanceValue });
         toast.success("Attendance marked successfully");
         set({ attendanceStatus: { ...get().attendanceStatus, [classId]: status } });
+        
+        // Fetch recent attendance immediately to update the RecentAtt component
+        await get().fetchRecentAttendance();
     } catch (error) {
         console.log(`Error in markAttendance: ${error.message}`);
         toast.error("Failed to mark attendance");
@@ -71,7 +74,6 @@ export const useInputStore = create((set, get) => ({
     } finally {
         set({ isLoading: false });
     }
-    
   },
 
   resetAttendanceStatus: () => {
