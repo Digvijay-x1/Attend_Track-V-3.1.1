@@ -1,7 +1,7 @@
 import React from 'react'
 import { Edit, Trash2 } from 'lucide-react'
 
-const SubjectCard = ({ course = {} }) => {
+const SubjectCard = ({ course = {}, onEdit, onDelete }) => {
     const { title, profName, code, schedule, attendancePercentage = 0, totalClasses = 0, attendedClasses = 0 } = course || {};
 
     // above 90% excellent, above 85% good, above 75% warning, below 75% poor
@@ -21,7 +21,7 @@ const SubjectCard = ({ course = {} }) => {
         return 'bg-error';
     };
 
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     return (
         <div className='bg-base-100 rounded-xl p-6 shadow-lg border border-base-200'>
@@ -32,8 +32,18 @@ const SubjectCard = ({ course = {} }) => {
                     <p className='text-sm text-base-content/50'>{code}</p>
                 </div>
                 <div className='flex gap-2'>
-                    <button className='btn btn-sm btn-ghost'><Edit className='w-4 h-4' /></button>
-                    <button className='btn btn-sm btn-ghost text-error'><Trash2 className='w-4 h-4' /></button>
+                    <button 
+                        className='btn btn-sm btn-ghost'
+                        onClick={() => onEdit?.(course)}
+                    >
+                        <Edit className='w-4 h-4' />
+                    </button>
+                    <button 
+                        className='btn btn-sm btn-ghost text-error'
+                        onClick={() => onDelete?.(course._id)}
+                    >
+                        <Trash2 className='w-4 h-4' />
+                    </button>
                 </div>
             </div>
 
