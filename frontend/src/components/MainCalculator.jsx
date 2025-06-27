@@ -47,7 +47,7 @@ const MainCalculator = () => {
     console.log("Rendering with courses:", courses);
 
     return (
-        <div className="p-6">
+        <div className="p-3 sm:p-6">
             <div className="flex items-center mb-4">
                 <div className="text-primary mr-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,47 +63,55 @@ const MainCalculator = () => {
                 </div>
             )}
             
-            <form onSubmit={handleSubmit} className="mb-6 space-y-4 bg-base-300 p-4 rounded-lg">
+            <form onSubmit={handleSubmit} className="mb-6 space-y-4 bg-base-300 p-3 sm:p-4 rounded-lg">
                 <div>
                     <label className="block mb-1 font-medium text-primary-content">Select Subject</label>
                     <select 
                         value={selectedCourse} 
                         onChange={(e) => setSelectedCourse(e.target.value)}
-                        className="w-full p-2 rounded select select-bordered"
+                        className="w-full p-2 rounded select select-bordered text-sm sm:text-base max-w-full"
                         required
+                        style={{ textOverflow: 'ellipsis' }}
                     >
                         <option value="">Select a course</option>
-                        {courses.map((course) => (
-                            <option key={course._id} value={course.code}>
-                                {course.name || course.title} ({course.code})
-                            </option>
-                        ))}
+                        {courses.map((course) => {
+                            // Create a shorter display for small screens
+                            const title = course.name || course.title;
+                            const code = course.code;
+                            return (
+                                <option key={course._id} value={code} className="text-wrap">
+                                    {`${title} (${code})`}
+                                </option>
+                            );
+                        })}
                     </select>
                 </div>
                 
-                <div>
-                    <label className="block mb-1 font-medium text-primary-content">Target Attendance (%)</label>
-                    <input 
-                        type="number" 
-                        value={targetPercentage}
-                        onChange={(e) => setTargetPercentage(Number(e.target.value))}
-                        className="w-full p-2 rounded input input-bordered"
-                        min="0"
-                        max="100"
-                        required
-                    />
-                </div>
-                
-                <div>
-                    <label className="block mb-1 font-medium text-primary-content">Expected Future Classes</label>
-                    <input 
-                        type="number" 
-                        value={futureClasses}
-                        onChange={(e) => setFutureClasses(e.target.value)}
-                        className="w-full p-2 rounded input input-bordered"
-                        min="0"
-                        required
-                    />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block mb-1 font-medium text-primary-content">Target Attendance (%)</label>
+                        <input 
+                            type="number" 
+                            value={targetPercentage}
+                            onChange={(e) => setTargetPercentage(Number(e.target.value))}
+                            className="w-full p-2 rounded input input-bordered"
+                            min="0"
+                            max="100"
+                            required
+                        />
+                    </div>
+                    
+                    <div>
+                        <label className="block mb-1 font-medium text-primary-content">Expected Future Classes</label>
+                        <input 
+                            type="number" 
+                            value={futureClasses}
+                            onChange={(e) => setFutureClasses(e.target.value)}
+                            className="w-full p-2 rounded input input-bordered"
+                            min="0"
+                            required
+                        />
+                    </div>
                 </div>
                 
                 <button 
@@ -116,36 +124,36 @@ const MainCalculator = () => {
             </form>
             
             {calculatorResult && (
-                <div className="border border-base-300 rounded-lg p-4 bg-base-300">
-                    <h3 className="font-bold mb-4 text-lg text-primary-content">Results</h3>
+                <div className="border border-base-300 rounded-lg p-3 sm:p-4 bg-base-300">
+                    <h3 className="font-bold mb-3 sm:mb-4 text-lg text-primary-content">Results</h3>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="border border-base-content/10 p-4 rounded-lg bg-base-200 shadow-sm">
-                            <h4 className="font-semibold mb-2 text-primary">Current Status</h4>
-                            <p className="mb-1 text-base-content">Total Classes: <span className="font-medium">{calculatorResult.currentStats.totalClasses}</span></p>
-                            <p className="mb-1 text-base-content">Attended Classes: <span className="font-medium">{calculatorResult.currentStats.attendedClasses}</span></p>
-                            <p className="text-base-content">Current Percentage: <span className="font-medium">{calculatorResult.currentStats.currentPercentage}%</span></p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div className="border border-base-content/10 p-3 sm:p-4 rounded-lg bg-base-200 shadow-sm">
+                            <h4 className="font-semibold mb-2 text-primary text-sm sm:text-base">Current Status</h4>
+                            <p className="mb-1 text-base-content text-sm sm:text-base">Total Classes: <span className="font-medium">{calculatorResult.currentStats.totalClasses}</span></p>
+                            <p className="mb-1 text-base-content text-sm sm:text-base">Attended Classes: <span className="font-medium">{calculatorResult.currentStats.attendedClasses}</span></p>
+                            <p className="text-base-content text-sm sm:text-base">Current Percentage: <span className="font-medium">{calculatorResult.currentStats.currentPercentage}%</span></p>
                         </div>
                         
-                        <div className="border border-base-content/10 p-4 rounded-lg bg-base-200 shadow-sm">
-                            <h4 className="font-semibold mb-2 text-primary">Future Projection</h4>
-                            <p className="mb-1 text-base-content">Expected New Classes: <span className="font-medium">{calculatorResult.futureStats.expectedNewClasses}</span></p>
-                            <p className="text-base-content">Final Total Classes: <span className="font-medium">{calculatorResult.futureStats.finalTotalClasses}</span></p>
+                        <div className="border border-base-content/10 p-3 sm:p-4 rounded-lg bg-base-200 shadow-sm">
+                            <h4 className="font-semibold mb-2 text-primary text-sm sm:text-base">Future Projection</h4>
+                            <p className="mb-1 text-base-content text-sm sm:text-base">Expected New Classes: <span className="font-medium">{calculatorResult.futureStats.expectedNewClasses}</span></p>
+                            <p className="text-base-content text-sm sm:text-base">Final Total Classes: <span className="font-medium">{calculatorResult.futureStats.finalTotalClasses}</span></p>
                         </div>
                         
-                        <div className="border border-base-content/10 p-4 rounded-lg bg-base-200 shadow-sm">
-                            <h4 className="font-semibold mb-2 text-primary">Target ({calculatorResult.targetStats.targetPercentage}%)</h4>
-                            <p className="mb-1 text-base-content">Classes Needed to Attend: <span className="font-medium">{calculatorResult.targetStats.classesNeededForTarget}</span></p>
-                            <p className="mb-1 text-base-content">Classes You Can Miss: <span className="font-medium">{calculatorResult.targetStats.canMissClasses}</span></p>
-                            <p className={calculatorResult.isTargetPossible ? "text-success font-medium" : "text-error font-medium"}>
+                        <div className="border border-base-content/10 p-3 sm:p-4 rounded-lg bg-base-200 shadow-sm">
+                            <h4 className="font-semibold mb-2 text-primary text-sm sm:text-base">Target ({calculatorResult.targetStats.targetPercentage}%)</h4>
+                            <p className="mb-1 text-base-content text-sm sm:text-base">Classes Needed: <span className="font-medium">{calculatorResult.targetStats.classesNeededForTarget}</span></p>
+                            <p className="mb-1 text-base-content text-sm sm:text-base">Can Miss: <span className="font-medium">{calculatorResult.targetStats.canMissClasses}</span></p>
+                            <p className={`${calculatorResult.isTargetPossible ? "text-success" : "text-error"} font-medium text-sm sm:text-base`}>
                                 {calculatorResult.isTargetPossible ? "Target is achievable" : "Target is not achievable"}
                             </p>
                         </div>
                         
-                        <div className="border border-base-content/10 p-4 rounded-lg bg-base-200 shadow-sm">
-                            <h4 className="font-semibold mb-2 text-primary">Minimum Requirement (75%)</h4>
-                            <p className="mb-1 text-base-content">Classes Needed to Attend: <span className="font-medium">{calculatorResult.minimumStats.classesNeededForMinimum}</span></p>
-                            <p className={calculatorResult.isMinimumPossible ? "text-success font-medium" : "text-error font-medium"}>
+                        <div className="border border-base-content/10 p-3 sm:p-4 rounded-lg bg-base-200 shadow-sm">
+                            <h4 className="font-semibold mb-2 text-primary text-sm sm:text-base">Minimum Requirement (75%)</h4>
+                            <p className="mb-1 text-base-content text-sm sm:text-base">Classes Needed: <span className="font-medium">{calculatorResult.minimumStats.classesNeededForMinimum}</span></p>
+                            <p className={`${calculatorResult.isMinimumPossible ? "text-success" : "text-error"} font-medium text-sm sm:text-base`}>
                                 {calculatorResult.isMinimumPossible ? "Minimum requirement is achievable" : "Minimum requirement is not achievable"}
                             </p>
                         </div>
