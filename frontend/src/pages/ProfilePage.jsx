@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 import toast from 'react-hot-toast'
-import { Camera } from 'lucide-react'
+import { Camera, User, Mail, Palette } from 'lucide-react'
 import Themes from '../components/Themes'
 
 const ProfilePage = () => {
@@ -26,90 +26,124 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-xl">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <div className="flex items-center  gap-4">
-        <div className="bg-blue-100 p-2 rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                </svg>
+    <div className="container mx-auto p-4 lg:p-6">
+      <h1 className="text-2xl font-bold mb-6 text-primary">Profile Settings</h1>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - User Profile */}
+        <div className="lg:col-span-2">
+          <div className="card bg-base-200 shadow-lg overflow-hidden">
+            <div className="card-body p-0">
+              {/* Header */}
+              <div className="bg-base-300 p-4 sm:p-6">
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="bg-primary/10 p-2 rounded-lg">
+                    <User className="w-5 h-5 text-primary" />
+                  </div>
+                  <h2 className="text-xl font-bold">Profile Information</h2>
+                </div>
+                <p className="text-sm text-base-content/70">Manage your personal information</p>
+              </div>
+              
+              {/* Profile Picture Section */}
+              <div className="flex flex-col items-center justify-center py-8 px-4 border-b border-base-300">
+                <div className="relative mb-4">
+                  <div className="avatar">
+                    <div className="w-28 h-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                      <img 
+                        src={selectedImage || profilePicture || "/avatar.png"} 
+                        alt="Profile" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <label 
+                    htmlFor="avatar-upload" 
+                    className={`btn btn-circle btn-sm absolute bottom-0 right-0 bg-primary hover:bg-primary-focus border-none ${
+                      isUpdatingProfile ? "loading" : ""
+                    }`}
+                  >
+                    <input 
+                      type="file" 
+                      id="avatar-upload" 
+                      className="hidden" 
+                      onChange={handleImageUpload}
+                      accept="image/*"
+                      disabled={isUpdatingProfile}
+                    />
+                    <Camera className="w-4 h-4 text-primary-content" />
+                  </label>
+                </div>
+                <p className="text-sm text-base-content/70">
+                  {isUpdatingProfile ? "Updating profile picture..." : "Click the camera icon to update your photo"}
+                </p>
+              </div>
+
+              {/* Account Information */}
+              <div className="p-4 sm:p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="bg-secondary/10 p-2 rounded-lg">
+                    <Mail className="w-5 h-5 text-secondary" />
+                  </div>
+                  <h2 className="text-lg font-bold">Account Information</h2>
+                </div>
                 
-            </div>
-            <h2 className="card-title text-2xl font-bold text-center my-6">Profile</h2>
-            </div>
-          <p className="text-sm text-base-content/70 text-center mb-8">Your profile information</p>
-          
-          {/* Profile Picture Section */}
-          <div className="flex flex-col items-center justify-center mb-8">
-            <div className="relative">
-              <div className="avatar">
-                <div className="w-24 h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                  <img 
-                    src={selectedImage || profilePicture || "/avatar.png"} 
-                    alt="Profile" 
-                    className="w-full h-full object-cover"
-                  />
+                <div className="space-y-4">
+                  <div className="form-control w-full">
+                    <label className="label">
+                      <span className="label-text font-medium">Full Name</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      value={name}
+                      readOnly
+                      className="input input-bordered w-full bg-base-100"
+                    />
+                  </div>
+
+                  <div className="form-control w-full">
+                    <label className="label">
+                      <span className="label-text font-medium">Email Address</span>
+                    </label>
+                    <input 
+                      type="email" 
+                      value={email}
+                      readOnly
+                      className="input input-bordered w-full bg-base-100"
+                    />
+                  </div>
                 </div>
               </div>
-              <label 
-                htmlFor="avatar-upload" 
-                className={`btn btn-circle btn-sm absolute bottom-0 right-0 bg-primary hover:bg-primary-focus ${
-                  isUpdatingProfile ? "loading..." : "pointer-events-auto"
-                }`}
-              >
-                <input 
-                  type="file" 
-                  id="avatar-upload" 
-                  className="hidden" 
-                      onChange={handleImageUpload}
-                  accept="image/*"
-                />
-                <Camera className="w-4 h-4" />
-              </label>
             </div>
-            <p className="text-xs text-base-content/70 mt-2">{isUpdatingProfile ? "Updating..." : "Click the camera icon to update your photo"}</p>
           </div>
-
-          {/* Form Section */}
-
-          {/* Account Information */}
-          <div className="flex items-center gap-4">
-          <div className="bg-green-100 p-2 rounded-lg">
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            
-          </div>
-          <h2 className="text-lg font-bold my-4">Account Information</h2>
-          </div>
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text">Full Name</span>
-            </label>
-            <input 
-              type="text" 
-              value={name}
-              readOnly
-              className="input input-bordered w-full bg-base-200"
-            />
-          </div>
-
-          <div className="form-control w-full mt-4">
-            <label className="label">
-              <span className="label-text">Email Address</span>
-            </label>
-            <input 
-              type="email" 
-              value={email}
-              readOnly
-              className="input input-bordered w-full bg-base-200"
-            />
+        </div>
+        
+        {/* Right Column - Theme Settings */}
+        <div className="lg:col-span-1">
+          <div className="card bg-base-200 shadow-lg h-full">
+            <div className="card-body p-0">
+              <div className="bg-base-300 p-4 sm:p-6">
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="bg-accent/10 p-2 rounded-lg">
+                    <Palette className="w-5 h-5 text-accent" />
+                  </div>
+                  <h2 className="text-xl font-bold">Appearance</h2>
+                </div>
+                <p className="text-sm text-base-content/70">Customize your interface</p>
+              </div>
+              
+              <div className="p-4 sm:p-6">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold mb-1">Theme</h3>
+                  <p className="text-sm text-base-content/70">Choose a theme for your interface</p>
+                </div>
+                
+                <Themes />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <Themes />
     </div>
   )
 }
