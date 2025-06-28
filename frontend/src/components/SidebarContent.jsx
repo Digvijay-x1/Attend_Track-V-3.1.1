@@ -83,7 +83,7 @@ const SidebarContent = ({ onItemClick }) => {
               logout();
               if (onItemClick) onItemClick();
             }}
-            className="w-full flex items-center justify-center gap-2 p-2 border border-base-300 rounded-md bg-primary hover:text-primary-content transition-colors cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 p-2 border border-base-300 rounded-md bg-primary text-primary-content transition-colors cursor-pointer"
           >
             <LogOut size={16} className="flex-shrink-0" />
             <span>Logout</span>

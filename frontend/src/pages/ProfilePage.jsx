@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 import toast from 'react-hot-toast'
 import { Camera } from 'lucide-react'
+import Themes from '../components/Themes'
 
 const ProfilePage = () => {
   const {authUser , isUpdatingProfile , updateProfile } = useAuthStore();
@@ -107,6 +108,8 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+
+      <Themes />
     </div>
   )
 }
