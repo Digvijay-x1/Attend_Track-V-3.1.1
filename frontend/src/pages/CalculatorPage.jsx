@@ -4,8 +4,8 @@ import QuickCalculator from '../components/QuickCalculator'
 
 const CalculatorPage = () => {
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl p-6 font-bold text-base-content mb-2">Attendance Calculator</h1>
+    <div className="container mx-auto p-4 lg:p-6">
+      <h1 className="text-2xl font-bold mb-6 text-base-content">Attendance Calculator</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Detailed Calculator in the main content area (now on the left) */}

@@ -54,7 +54,7 @@ const MainCalculator = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                 </div>
-                <h2 className="text-xl font-bold text-primary-content">Detailed Calculator</h2>
+                <h2 className="text-xl font-bold text-base-content">Detailed Calculator</h2>
             </div>
             
             {isLoading && (
@@ -65,11 +65,11 @@ const MainCalculator = () => {
             
             <form onSubmit={handleSubmit} className="mb-6 space-y-4 bg-base-300 p-3 sm:p-4 rounded-lg">
                 <div>
-                    <label className="block mb-1 font-medium text-primary-content">Select Subject</label>
+                    <label className="block mb-1 font-medium text-base-content">Select Subject</label>
                     <select 
                         value={selectedCourse} 
                         onChange={(e) => setSelectedCourse(e.target.value)}
-                        className="w-full p-2 rounded select select-bordered text-sm sm:text-base max-w-full"
+                        className="w-full p-2 rounded select select-bordered text-sm sm:text-base max-w-full text-base-content"
                         required
                         style={{ textOverflow: 'ellipsis' }}
                     >
@@ -89,12 +89,12 @@ const MainCalculator = () => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label className="block mb-1 font-medium text-primary-content">Target Attendance (%)</label>
+                        <label className="block mb-1 font-medium text-base-content">Target Attendance (%)</label>
                         <input 
                             type="number" 
                             value={targetPercentage}
                             onChange={(e) => setTargetPercentage(Number(e.target.value))}
-                            className="w-full p-2 rounded input input-bordered"
+                            className="w-full p-2 rounded input input-bordered text-base-content"
                             min="0"
                             max="100"
                             required
@@ -102,12 +102,12 @@ const MainCalculator = () => {
                     </div>
                     
                     <div>
-                        <label className="block mb-1 font-medium text-primary-content">Expected Future Classes</label>
+                        <label className="block mb-1 font-medium text-base-content">Expected Future Classes</label>
                         <input 
                             type="number" 
                             value={futureClasses}
                             onChange={(e) => setFutureClasses(e.target.value)}
-                            className="w-full p-2 rounded input input-bordered"
+                            className="w-full p-2 rounded input input-bordered text-base-content"
                             min="0"
                             required
                         />
@@ -116,7 +116,7 @@ const MainCalculator = () => {
                 
                 <button 
                     type="submit" 
-                    className="btn btn-primary w-full"
+                    className="btn btn-primary w-full text-primary-content"
                     disabled={isLoading}
                 >
                     {isLoading ? 'Calculating...' : 'Calculate'}
@@ -125,7 +125,7 @@ const MainCalculator = () => {
             
             {calculatorResult && (
                 <div className="border border-base-300 rounded-lg p-3 sm:p-4 bg-base-300">
-                    <h3 className="font-bold mb-3 sm:mb-4 text-lg text-primary-content">Results</h3>
+                    <h3 className="font-bold mb-3 sm:mb-4 text-lg text-base-content">Results</h3>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div className="border border-base-content/10 p-3 sm:p-4 rounded-lg bg-base-200 shadow-sm">
@@ -145,7 +145,7 @@ const MainCalculator = () => {
                             <h4 className="font-semibold mb-2 text-primary text-sm sm:text-base">Target ({calculatorResult.targetStats.targetPercentage}%)</h4>
                             <p className="mb-1 text-base-content text-sm sm:text-base">Classes Needed: <span className="font-medium">{calculatorResult.targetStats.classesNeededForTarget}</span></p>
                             <p className="mb-1 text-base-content text-sm sm:text-base">Can Miss: <span className="font-medium">{calculatorResult.targetStats.canMissClasses}</span></p>
-                            <p className={`${calculatorResult.isTargetPossible ? "text-success" : "text-error"} font-medium text-sm sm:text-base`}>
+                            <p className={`${calculatorResult.isTargetPossible ? "text-success font-medium" : "text-error font-medium"} text-sm sm:text-base`}>
                                 {calculatorResult.isTargetPossible ? "Target is achievable" : "Target is not achievable"}
                             </p>
                         </div>
@@ -153,7 +153,7 @@ const MainCalculator = () => {
                         <div className="border border-base-content/10 p-3 sm:p-4 rounded-lg bg-base-200 shadow-sm">
                             <h4 className="font-semibold mb-2 text-primary text-sm sm:text-base">Minimum Requirement (75%)</h4>
                             <p className="mb-1 text-base-content text-sm sm:text-base">Classes Needed: <span className="font-medium">{calculatorResult.minimumStats.classesNeededForMinimum}</span></p>
-                            <p className={`${calculatorResult.isMinimumPossible ? "text-success" : "text-error"} font-medium text-sm sm:text-base`}>
+                            <p className={`${calculatorResult.isMinimumPossible ? "text-success font-medium" : "text-error font-medium"} text-sm sm:text-base`}>
                                 {calculatorResult.isMinimumPossible ? "Minimum requirement is achievable" : "Minimum requirement is not achievable"}
                             </p>
                         </div>
