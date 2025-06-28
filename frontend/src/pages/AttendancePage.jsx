@@ -24,7 +24,7 @@ const AttendancePage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-base-200 p-3 sm:p-4 md:p-6">
+      <div className="min-h-screen bg-base-200 p-2 sm:p-4">
         <div className="max-w-6xl mx-auto">
           <SkeletonCard cards={3} />
         </div>
@@ -38,9 +38,9 @@ const AttendancePage = () => {
 
   return (
     <div className="min-h-screen bg-base-200">
-      <div className="max-w-6xl mx-auto px-3 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8">
+      <div className="max-w-6xl mx-auto px-2 py-3 sm:px-4 sm:py-6">
         {/* Simple Header */}
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <div className="flex items-center gap-3">
             <div className="bg-primary/20 p-2 rounded-lg">
               <Calendar className="h-5 w-5 text-primary" />
@@ -57,11 +57,11 @@ const AttendancePage = () => {
         </div>
 
         {/* Simplified Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-6">
           {/* Today's Schedule Section */}
           <div className="lg:col-span-3">
             <div className="card bg-base-100 shadow-md">
-              <div className="card-body p-4">
+              <div className="card-body p-3 sm:p-4">
                 {/* Header */}
                 <div className="flex items-center gap-3 mb-4">
                   <div className="bg-primary/10 p-2 rounded-lg">
@@ -88,7 +88,7 @@ const AttendancePage = () => {
           {/* Recent Attendance Section */}
           <div className="lg:col-span-1">
             <div className="card bg-base-100 shadow-md h-fit">
-              <div className="card-body p-4">
+              <div className="card-body p-3 sm:p-4">
                 {isRecentAttendanceLoading ? (
                   <SkeletonCard cards={3} />
                 ) : (

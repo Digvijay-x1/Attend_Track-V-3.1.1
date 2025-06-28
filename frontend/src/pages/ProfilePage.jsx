@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 import toast from 'react-hot-toast'
-import { Camera, User, Mail, Palette } from 'lucide-react'
+import { Camera, User, Mail, Palette, UserCircle } from 'lucide-react'
 import Themes from '../components/Themes'
 
 const ProfilePage = () => {
@@ -27,7 +27,17 @@ const ProfilePage = () => {
 
   return (
     <div className="container mx-auto p-4 lg:p-6">
-      <h1 className="text-2xl font-bold mb-6 text-primary">Profile Settings</h1>
+      <div className="flex items-center gap-3 mb-6">
+        <div className="bg-primary/20 p-2 rounded-lg">
+          <UserCircle className="h-5 w-5 text-primary" />
+        </div>
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-primary">Profile Settings</h1>
+          <p className="text-xs sm:text-sm text-base-content/70">
+            Manage your profile and preferences
+          </p>
+        </div>
+      </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - User Profile */}

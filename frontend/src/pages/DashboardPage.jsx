@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 import { useDashStore } from '../store/useDash.store'
 import WeeklyAttendanceChart from '../components/chats/WeeklyAttendanceChart'
 import SubjectAttendanceChart from '../components/chats/SubjectAttendanceChart'
+import SkeletonCard from '../components/skeleton/SkeletonCard'
 
 const Dashboard = () => {
-  const { fetchData , data} = useDashStore();
+  const { fetchData , data , isLoading} = useDashStore();
   const {totalLowAttendanceCourses , attendanceStats , attendancePerWeek , coursesWithAttendancePercentage , stats} = data || {};
 
   useEffect(()=>{
@@ -12,13 +13,16 @@ const Dashboard = () => {
   },[fetchData]);
 
   return (
-    <div className="p-6 min-h-screen bg-base-200">
+    <div className="p-3 sm:p-6 min-h-screen bg-base-200">
       <h1 className="text-3xl font-bold text-base-content mb-6">Dashboard</h1>
       
       {/* Grid Container */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {/* Overall Attendance */}
-        <div className="bg-base-100 rounded-xl p-6 shadow-sm">
+        {isLoading ? (
+          <SkeletonCard cards={1} />
+        ) : (
+        <div className="bg-base-100 rounded-xl p-4 sm:p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <div>
                  <h3 className="text-sm text-base-content/70 font-medium">Overall Attendance</h3>
@@ -34,12 +38,16 @@ const Dashboard = () => {
               
               </div>
               </div>
-            
+
             <div className="text-green-600 text-sm font-medium">+2.1% from last week</div>
           </div>
+        )}
 
         {/* Total Classes */}
-        <div className="bg-base-100  rounded-xl p-6 shadow-sm">
+        {isLoading ? (
+          <SkeletonCard cards={1} />
+        ) : (
+        <div className="bg-base-100  rounded-xl p-4 sm:p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-sm text-base-content/70 font-medium">Total Classes</h3>
@@ -55,9 +63,13 @@ const Dashboard = () => {
             {attendanceStats?.totalclassesAttended || 0} attended
           </div>
         </div>
+        )}
 
         {/* Below 75% */}
-        <div className="bg-base-100 rounded-xl p-6 shadow-sm">
+        {isLoading ? (
+          <SkeletonCard cards={1} />
+        ) : (
+        <div className="bg-base-100 rounded-xl p-4 sm:p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-sm text-base-content/70 font-medium">Below 75%</h3>
@@ -71,9 +83,13 @@ const Dashboard = () => {
           </div>
           <div className="text-error text-sm font-medium">Needs attention</div>
         </div>
+        )}
 
         {/* This Week */}
-        <div className="bg-base-100 rounded-xl p-6 shadow-sm">
+        {isLoading ? (
+          <SkeletonCard cards={1} />
+        ) : (
+        <div className="bg-base-100 rounded-xl p-4 sm:p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-sm text-base-content/70 font-medium">This Week</h3>
@@ -89,18 +105,25 @@ const Dashboard = () => {
             {(attendancePerWeek?.totalClassesAttended / attendancePerWeek?.totalClasses * 100 || 0).toFixed(1)}% attendance
           </div>
         </div>
+        )}
       </div>
 
       {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         {/* Weekly Attendance Chart */}
-        <div className="hidden sm:block bg-base-100 rounded-xl p-6 shadow-sm">
+        {isLoading ? (
+          <SkeletonCard cards={1} />
+        ) : (
+        <div className="hidden sm:block bg-base-100 rounded-xl p-4 sm:p-6 shadow-sm">
   <h3 className="text-sm text-base-content/70 font-medium mb-4">Weekly Attendance</h3>
   <WeeklyAttendanceChart stats={stats} />
 </div>
-
+        )}
         {/* Subject Attendance Chart */}
-        <div className="bg-base-100 rounded-xl p-6 shadow-sm">
+        {isLoading ? (
+          <SkeletonCard cards={1} />
+        ) : (
+        <div className="bg-base-100 rounded-xl p-4 sm:p-6 shadow-sm">
           <SubjectAttendanceChart
             title="Subject-wise Attendance"
             subjects={
@@ -113,7 +136,8 @@ const Dashboard = () => {
             }
           />
         </div>
-      </div>
+        )}
+        </div>
     </div>
   );
 }

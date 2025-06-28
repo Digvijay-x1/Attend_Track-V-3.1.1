@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Plus, Book, Clock, BarChart3 } from 'lucide-react'
+import { Plus, Book, Clock, BarChart3, BookOpen } from 'lucide-react'
 import { useSubjectStore } from '../store/useSubject.store'
 import SubjectCard from '../components/SubjectCard'
 import SubjectModel from '../components/popupModel/SubjectModel'
@@ -67,7 +67,7 @@ const SubjectPage = () => {
   const skeletonCards = Array(6).fill(null);
 
   return (
-    <div className="min-h-screen bg-base-200 p-6">
+    <div className="min-h-screen bg-base-200 p-3 sm:p-6">
       {/* Modal */}
       <dialog id="subject_modal" className="modal">
         <div className="modal-box">
@@ -94,13 +94,18 @@ const SubjectPage = () => {
         </form>
       </dialog>
 
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-base-content mb-2">Subject Management</h1>
-          <p className="text-base-content/70">Manage your subjects, schedules, and attendance goals</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="bg-primary/20 p-2 rounded-lg">
+            <BookOpen className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-base-content">Subject Management</h1>
+            <p className="text-base-content/70 text-sm sm:text-base">Manage your subjects, schedules, and attendance goals</p>
+          </div>
         </div>
         <button 
-          className="btn btn-primary"
+          className="btn btn-primary w-full sm:w-auto"
           onClick={() => {
             setEditingSubject(null);
             document.getElementById('subject_modal').showModal();
@@ -112,9 +117,9 @@ const SubjectPage = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 mb-6">
         <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
+          <div className="card-body p-3 sm:p-6">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="card-title text-base-content/70">Total Subjects</h3>  
@@ -132,7 +137,7 @@ const SubjectPage = () => {
         </div>
 
         <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
+          <div className="card-body p-3 sm:p-6">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="card-title text-base-content/70">Weekly Classes</h3>
@@ -150,7 +155,7 @@ const SubjectPage = () => {
         </div>
 
         <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
+          <div className="card-body p-3 sm:p-6">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="card-title text-base-content/70">Avg. Attendance</h3>
@@ -169,7 +174,7 @@ const SubjectPage = () => {
       </div>
 
       {/* Subjects Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
         {isSubjectsLoading ? (
           // Show skeleton cards while loading
           skeletonCards.map((_, index) => (

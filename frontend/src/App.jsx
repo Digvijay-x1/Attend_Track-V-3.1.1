@@ -35,7 +35,7 @@ const App = () => {
       <div className="min-h-screen bg-base-200" data-theme={theme}>
       
       {!isAuthPage && <Navbar />}
-      <div className={!isAuthPage ? "lg:pl-64 pt-4 px-4 min-h-screen" : ""}>
+      <div className={!isAuthPage ? "lg:pl-64 pt-4 px-2 sm:px-4 min-h-screen mx-auto w-full sm:w-[95%] md:w-[90%] lg:w-full lg:mx-0" : ""}>
         <Routes>
           <Route path='/' element={authUser ? <DashboardPage /> : <Navigate to="/login" />} />
           <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to="/login" />} /> 
