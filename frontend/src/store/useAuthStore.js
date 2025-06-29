@@ -59,14 +59,57 @@ export const useAuthStore = create((set) => ({
             set({isLoggingIn: false});
         }
     },
+    googleLogin: async(userData)=>{
+        set({isLoggingIn: true});
+        try {
+            const res = await axiosInstance.post("/auth/google-login", userData);
+            set({authUser: res.data});
+            toast.success("Logged in with Google successfully");
+        } catch (error) {
+            toast.error("Failed to login with Google");
+            console.log("error in googleLogin: ", error);
+        } finally {
+            set({isLoggingIn: false});
+        }
+    },
     updateProfile: async(formData)=>{
         set({isUpdatingProfile: true});
         try {
-            const res = await axiosInstance.put("/auth/update-profile",formData);
-            set({authUser: res.data});
+            const res = await axiosInstance.put("/auth/update-profile", formData);
+            
+            // Check if response has the expected structure
+            if (res.data && res.data.user) {
+                // Update the authUser state with the updated user data
+                // Preserve the existing structure by updating only the user part
+                set((state) => {
+                    // If authUser has a nested user property
+                    if (state.authUser && state.authUser.user) {
+                        return {
+                            authUser: {
+                                ...state.authUser,
+                                user: res.data.user
+                            }
+                        };
+                    }
+                    // If authUser is the user object directly
+                    else {
+                        return { authUser: res.data };
+                    }
+                });
+                
+                toast.success("Profile updated successfully");
+            } else {
+                console.error("Unexpected response format:", res.data);
+                toast.error("Received unexpected response format");
+            }
         } catch (error) {   
-            toast.error("Failed to update profile");
-            console.log("error in updateProfile: ",error);
+            console.error("Error in updateProfile:", error.response?.data || error.message);
+            
+            // Show more specific error message if available
+            const errorMessage = error.response?.data?.message || 
+                                error.response?.data?.error || 
+                                "Failed to update profile";
+            toast.error(errorMessage);
         } finally {
             set({isUpdatingProfile: false});
         }

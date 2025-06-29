@@ -4,6 +4,7 @@ import { Mail , Eye , EyeOff } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import Driff from '../components/Driff'
+import GoogleLoginButton from '../components/GoogleLoginButton'
 
 const RegisterPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -93,6 +94,10 @@ const RegisterPage = () => {
               >
                 {isRegistering ? "Registering..." : "Register"}
               </button>
+              
+              <div className="divider my-6">OR</div>
+              
+              <GoogleLoginButton />
             </fieldset>
           </form>
 

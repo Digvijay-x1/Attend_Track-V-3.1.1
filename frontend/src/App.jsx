@@ -1,4 +1,4 @@
-import React , {useEffect} from 'react'
+import React , {useEffect, useState} from 'react'
 import { Routes, Route , Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import DashboardPage from './pages/DashboardPage'
@@ -12,12 +12,28 @@ import RegisterPage from './pages/RegisterPage'
 import { Loader } from 'lucide-react'
 import { Toaster } from 'react-hot-toast'
 import { useThemeStore } from './store/useTheme.store'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const App = () => {
   const { authUser , checkAuth , isCheckingAuth } = useAuthStore();
   const location = useLocation();
   const isAuthPage = ['/login', '/register'].includes(location.pathname);
   const {theme} = useThemeStore();
+  
+  // Get the Google Client ID from the environment variables
+  const [clientId, setClientId] = useState("");
+  
+  useEffect(() => {
+    // Try to get the client ID from the environment variables
+    // In Vite, environment variables need to be prefixed with VITE_
+    // But we're also checking for CLIENT_ID directly
+    const id = import.meta.env.VITE_CLIENT_ID || 
+               import.meta.env.CLIENT_ID || 
+               "222996305875-h2v12nrgesdhc5l8pfp4bbfo79m1gk7t.apps.googleusercontent.com";
+    setClientId(id);
+    console.log("Using Google Client ID:", id);
+  }, []);
+  
   useEffect(()=>{
     checkAuth();
   },[checkAuth])
@@ -31,7 +47,18 @@ const App = () => {
     </div>
     )
   }
+
+  if (!clientId) {
+    return (
+      <div className='flex items-center justify-center h-screen bg-base-100'>
+        <Loader className="size-10 animate-spin text-primary"/>
+        <p className="ml-2">Loading configuration...</p>
+      </div>
+    );
+  }
+
   return (
+    <GoogleOAuthProvider clientId={clientId}>
       <div className="min-h-screen bg-base-200" data-theme={theme}>
       
       {!isAuthPage && <Navbar />}
@@ -48,6 +75,7 @@ const App = () => {
       </div>
       <Toaster />
     </div>
+    </GoogleOAuthProvider>
   )
 }
 

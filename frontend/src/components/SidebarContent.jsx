@@ -9,11 +9,12 @@ import {
   ClipboardEdit,
   LogOut
 } from 'lucide-react';
+import ImageWithFallback from './ImageWithFallback';
 
 const SidebarContent = ({ onItemClick }) => {
   const { authUser, logout } = useAuthStore();
   const location = useLocation();
-  const { name, email, profilePicture } = authUser?.user || {};
+  const { name, email, profilePicture } = authUser?.user || authUser || {};
 
   const navItems = [
     { path: '/', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
@@ -67,10 +68,11 @@ const SidebarContent = ({ onItemClick }) => {
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-base-300 bg-base-300/30">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-full bg-base-200 overflow-hidden flex-shrink-0">
-              <img 
-                src={profilePicture || "/avatar.png"} 
+              <ImageWithFallback 
+                src={profilePicture}
                 alt={name || "User"} 
                 className="w-full h-full object-cover"
+                fallbackSrc="/avatar.png"
               />
             </div>
             <div className="min-w-0">

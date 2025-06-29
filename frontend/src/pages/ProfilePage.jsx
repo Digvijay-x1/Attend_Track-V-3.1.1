@@ -1,28 +1,80 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 import toast from 'react-hot-toast'
 import { Camera, User, Mail, Palette, UserCircle } from 'lucide-react'
 import Themes from '../components/Themes'
+import ImageWithFallback from '../components/ImageWithFallback'
 
 const ProfilePage = () => {
-  const {authUser , isUpdatingProfile , updateProfile } = useAuthStore();
-  const {name , email , profilePicture } = authUser.user;
+  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+  
+  // Add a check to ensure authUser exists before destructuring
+  // Also handle both possible structures: authUser directly containing properties or having a nested user object
+  const name = authUser?.name || authUser?.user?.name || '';
+  const email = authUser?.email || authUser?.user?.email || '';
+  const profilePicture = authUser?.profilePicture || authUser?.user?.profilePicture || '/avatar.png';
+  
   const [selectedImage, setSelectedImage] = useState(null);
+  
+  // Reset selectedImage when profilePicture from authUser changes
+  useEffect(() => {
+    if (profilePicture && profilePicture !== '/avatar.png') {
+      setSelectedImage(null);
+    }
+  }, [profilePicture]);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    if (!file) return toast.error("Please select a file");
+    if (!file) {
+      toast.error("Please select a file");
+      return;
+    }
 
-    const reader = new FileReader();
+    // Check file size (limit to 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) {
+      toast.error("Image is too large. Please select an image under 5MB");
+      return;
+    }
 
-    reader.readAsDataURL(file);
+    // Check file type
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+      toast.error("Invalid file type. Please select a JPEG, PNG, GIF, or WebP image");
+      return;
+    }
 
-    reader.onload = async () => {
-      const base64Image = reader.result;
-      setSelectedImage(base64Image);
-      await updateProfile({ profilePicture: base64Image });
-      toast.success("Profile picture updated successfully");
-    };
+    try {
+      const reader = new FileReader();
+      
+      reader.onload = async (event) => {
+        try {
+          const base64Image = event.target.result;
+          setSelectedImage(base64Image);
+          
+          // Show loading toast
+          const loadingToast = toast.loading("Uploading profile picture...");
+          
+          await updateProfile({ profilePicture: base64Image });
+          
+          // Dismiss loading toast and show success
+          toast.dismiss(loadingToast);
+        } catch (error) {
+          console.error("Error in image upload:", error);
+          setSelectedImage(null); // Reset the selected image on error
+        }
+      };
+      
+      reader.onerror = () => {
+        toast.error("Failed to read the image file");
+        console.error("FileReader error:", reader.error);
+      };
+
+      reader.readAsDataURL(file);
+    } catch (error) {
+      toast.error("Failed to process the image");
+      console.error("Image processing error:", error);
+    }
   }
 
   return (
@@ -60,10 +112,11 @@ const ProfilePage = () => {
                 <div className="relative mb-4">
                   <div className="avatar">
                     <div className="w-28 h-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      <img 
-                        src={selectedImage || profilePicture || "/avatar.png"} 
+                      <ImageWithFallback 
+                        src={selectedImage || profilePicture}
                         alt="Profile" 
                         className="w-full h-full object-cover"
+                        fallbackSrc="/avatar.png"
                       />
                     </div>
                   </div>

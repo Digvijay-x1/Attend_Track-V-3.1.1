@@ -4,6 +4,7 @@ import { Mail, Eye, EyeOff } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import Driff from '../components/Driff'
+import GoogleLoginButton from '../components/GoogleLoginButton'
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,6 +31,13 @@ const LoginPage = () => {
 
   return (
     <div className='flex min-h-screen bg-base-200'>
+       {/* title at top left */}
+       <div className="p-4">
+        <div className="flex items-center gap-3 mb-10">
+          <h1 className="text-xl font-bold bg-primary text-primary-content p-2 rounded-lg truncate">Attend</h1>
+          <h1 className="text-xl font-bold text-base-content truncate">. Track</h1>
+        </div>
+      </div>
       {/* left side */}
       <div className='flex flex-1 flex-col justify-center items-center p-8'>
         <div className='w-full max-w-md space-y-6'>
@@ -82,6 +90,10 @@ const LoginPage = () => {
               >
                 {isLoggingIn ? "Logging in..." : "Login"}
               </button>
+              
+              <div className="divider my-6">OR</div>
+              
+              <GoogleLoginButton />
             </fieldset>
           </form>
 
