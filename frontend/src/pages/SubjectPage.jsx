@@ -126,7 +126,7 @@ const SubjectPage = () => {
                 {isLoading ? (
                   <div className="skeleton h-10 w-16"></div>
                 ) : (
-                  <p className="text-3xl font-bold text-primary">{totalSubjects}</p>
+                  <p className="text-3xl font-bold text-primary">{totalSubjects || 0}</p>
                 )}
               </div>
               <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">

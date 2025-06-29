@@ -131,10 +131,6 @@ export const googleLogin = async (req, res) => {
   try {
     const { email, name, googleId, picture, token } = req.body;
     
-    // For debugging
-    console.log("Google login attempt with:", { email, googleId });
-    console.log("Using CLIENT_ID:", process.env.CLIENT_ID);
-    
     if (!email || !googleId) {
       return res.status(400).json({ message: "Email and Google ID are required" });
     }

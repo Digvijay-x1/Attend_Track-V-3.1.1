@@ -33,10 +33,8 @@ const SidebarContent = ({ onItemClick }) => {
       {/* Logo and sidebar top section */}
       <div className="p-4">
         <div className="flex items-center gap-3 mb-10">
-          <div className="size-11 bg-primary text-primary-content p-2 rounded-lg flex-shrink-0">
-            <span className="font-bold text-lg">A.T</span>
-          </div>
-          <h1 className="text-xl font-bold text-base-content truncate">Attend. Track</h1>
+          <h1 className="text-xl font-bold bg-primary text-primary-content p-2 rounded-lg truncate">Attend</h1>
+          <h1 className="text-xl font-bold text-base-content truncate">. Track</h1>
         </div>
 
         {/* Navigation items */}

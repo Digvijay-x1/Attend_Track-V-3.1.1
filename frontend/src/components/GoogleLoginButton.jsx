@@ -32,8 +32,6 @@ const GoogleLoginButton = () => {
           token: tokenResponse.access_token
         };
         
-        console.log("User data from Google:", userData);
-        
         // Use the auth store's googleLogin function
         googleLogin(userData);
       } catch (error) {
