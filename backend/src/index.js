@@ -30,6 +30,13 @@ app.use('/api/subjects' , subjectRoute)
 app.use("/api/input" , inputRoute)
 app.use("/api/calculator" , calculatorRoute)
 
+app.get("/", (req, res) => {
+    res.status(200).json({
+        status: "success",
+        message: "Server is running"
+    })
+})
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
     connectDB();
