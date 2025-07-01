@@ -11,7 +11,7 @@ import inputRoute from "./routes/input.route.js";
 import calculatorRoute from "./routes/calculator.route.js";
 import cors from "cors"
 
-dotenv.config({path: "../.env"});
+dotenv.config();
 
 const app = express();
 
