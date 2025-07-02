@@ -39,7 +39,7 @@ const Dashboard = () => {
               </div>
               </div>
 
-            <div className="text-green-600 text-sm font-medium">+2.1% from last week</div>
+            <div className="text-green-600 text-sm font-medium">Tracking consistency</div>
           </div>
         )}
 
