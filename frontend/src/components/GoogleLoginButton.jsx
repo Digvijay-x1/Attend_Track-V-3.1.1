@@ -10,7 +10,6 @@ const GoogleLoginButton = () => {
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        console.log("Google OAuth success, token:", tokenResponse);
         
         // Get user info from Google API
         const userInfo = await axios.get(

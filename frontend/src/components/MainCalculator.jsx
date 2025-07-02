@@ -15,24 +15,16 @@ const MainCalculator = () => {
     const [futureClasses, setFutureClasses] = useState(0);
 
     useEffect(() => {
-        console.log("Fetching course list...");
         fetchCourseList();
     }, [fetchCourseList]);
 
     // Debug logging
     useEffect(() => {
-        console.log("Current courseList:", courseList);
     }, [courseList]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!selectedCourse) return;
-        
-        console.log("Submitting calculator data:", {
-            code: selectedCourse,
-            targetAttendancePercentage: targetPercentage,
-            expectedFutureClasses: parseInt(futureClasses)
-        });
         
         postDataFromCalculator({
             code: selectedCourse,
@@ -44,7 +36,6 @@ const MainCalculator = () => {
     // Ensure courseList is always an array
     const courses = Array.isArray(courseList) ? courseList : [];
     
-    console.log("Rendering with courses:", courses);
 
     return (
         <div className="p-3 sm:p-6">

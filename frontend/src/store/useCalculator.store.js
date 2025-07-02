@@ -33,7 +33,6 @@ export const useCalculatorStore = create((set) => ({
           set({ calculatorResult: response.data });
       
           // Optional: toast or log for feedback
-          console.log("Calculation result:", response.data);
         } catch (error) {
           console.error('Error posting data from calculator:', error);
           set({ error: error.message });
