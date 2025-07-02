@@ -5,7 +5,9 @@
       "src": "src/index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["src/**"]
+        "includeFiles": ["src/**"],
+        "memory": 1024,
+        "maxDuration": 10
       }
     }
   ],
@@ -25,11 +27,5 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "regions": ["dub1"],
-  "functions": {
-    "src/index.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  }
+  "regions": ["dub1"]
 }
