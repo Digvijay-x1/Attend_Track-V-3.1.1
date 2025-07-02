@@ -27,9 +27,7 @@ const App = () => {
     // Try to get the client ID from the environment variables
     // In Vite, environment variables need to be prefixed with VITE_
     // But we're also checking for CLIENT_ID directly
-    const id = import.meta.env.VITE_CLIENT_ID || 
-               import.meta.env.CLIENT_ID || 
-               "222996305875-h2v12nrgesdhc5l8pfp4bbfo79m1gk7t.apps.googleusercontent.com";
+    const id = import.meta.env.VITE_CLIENT_ID;
     setClientId(id);
     console.log("Using Google Client ID:", id);
   }, []);
